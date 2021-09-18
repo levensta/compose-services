@@ -36,6 +36,7 @@ services:
     networks:
       - levensta
     environment:
+      DB_HOST: ${DB_HOST}
       DB_NAME: ${DB_NAME}
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
@@ -47,14 +48,14 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /home/${USERNAME}/data/db
+      device: /home/${USER}/data/db
   wp:
     name: wp
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /home/${USERNAME}/data/wp
+      device: /home/${USER}/data/wp
 
 networks:
   levensta:

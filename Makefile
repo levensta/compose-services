@@ -14,3 +14,4 @@ clean:
 	docker image rm srcs_nginx
 	docker image rm srcs_wordpress
 	docker image rm srcs_mariadb
+	rm -rf ~/data/db/* ~/data/wp/*
