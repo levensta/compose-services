@@ -1,4 +1,6 @@
 all:
+	mkdir -p ~/data/db
+	mkdir -p ~/data/wp
 	docker-compose -f srcs/docker-compose.yaml --env-file srcs/.env build
 	docker-compose -f srcs/docker-compose.yaml --env-file srcs/.env up -d
 
