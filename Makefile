@@ -7,13 +7,16 @@ all:
 up:
 	docker-compose -f srcs/docker-compose.yaml --env-file srcs/.env up -d
 
-down:
+stop:
 	docker-compose -f srcs/docker-compose.yaml down
 
 ps:
 	docker-compose -f srcs/docker-compose.yaml ps
+
 clean:
-	docker image rm srcs_nginx
-	docker image rm srcs_wordpress
-	docker image rm srcs_mariadb
-	rm -rf ~/data/db/* ~/data/wp/*
+	sudo docker image rm srcs_nginx
+	sudo docker image rm srcs_wordpress
+	sudo docker image rm srcs_mariadb
+	sudo docker volume rm wp
+	sudo docker volume rm db
+	sudo rm -rf ~/data/db/* ~/data/wp/*

@@ -1,3 +1,5 @@
+#!/bin/sh
+
 mv /server/my.cnf /etc/mysql/
 chmod 744 /etc/mysql/my.cnf
 
