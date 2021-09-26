@@ -2,7 +2,9 @@
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define( 'DB_NAME', 'data' );
+$_SERVER['HTTPS'] = 'on';
+
+define( 'DB_NAME', '${DB_NAME}' );
 
 /** MySQL database username */
 define( 'DB_USER', '${DB_USER}' );
@@ -11,7 +13,7 @@ define( 'DB_USER', '${DB_USER}' );
 define( 'DB_PASSWORD', '${DB_PASSWORD}' );
 
 /** MySQL hostname */
-define( 'DB_HOST', 'mariadb' );
+define( 'DB_HOST', '${DB_HOST}' );
 
 /** Database Charset to use in creating database tables. */
 define( 'DB_CHARSET', 'utf8' );
@@ -28,7 +30,7 @@ define('SECURE_AUTH_SALT', 'UBy+=7?=ZBk>S5OImRBA5)5.zn+Hz5$e|:ekjAc+b-&g5$m/*Z&}
 define('LOGGED_IN_SALT',   '$ZBOH.Rzkldr,GQ3QAj+[x@+VHY!c?C! Qd7)mqb>MZ9(!tUkwo?+MBX4hn6)EQT');
 define('NONCE_SALT',       '{:ex*If^?_BUl|Bmo](z*mP4IU-^mN!gtk;k56 *zmf=td[20yF6=}mQO;hH8vuH');
 
-$table_prefix = 'brntcd21_wp_';
+$table_prefix = 'wp_';
 
 define( 'WP_DEBUG', false );
 
@@ -37,4 +39,3 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once ABSPATH . 'wp-settings.php';
-?>

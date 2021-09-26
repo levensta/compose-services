@@ -1,3 +1,5 @@
+SHELL := /bin/bash 
+
 all:
 	mkdir -p ~/data/db
 	mkdir -p ~/data/wp
@@ -7,7 +9,7 @@ all:
 up:
 	docker-compose -f srcs/docker-compose.yaml --env-file srcs/.env up -d
 
-stop:
+down:
 	docker-compose -f srcs/docker-compose.yaml down
 
 ps:

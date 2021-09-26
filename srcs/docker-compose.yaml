@@ -1,45 +1,41 @@
-version: "3.7"
+version: "3.3"
 
 services:
   nginx:
     container_name: nginx
-    build: ./nginx
+    build: ./requirements/nginx
     volumes:
-      - wp:/var/www/wordpress
+      - wp:/var/www/html/wordpress
     depends_on:
       - wordpress
     networks:
-      - levensta
+      - levensta-network
     ports:
       - "443:443"
 
   wordpress:
     container_name: wordpress
-    build: ./wordpress
+    build: ./requirements/wordpress
     volumes:
-      - wp:/var/www/wordpress
+      - wp:/var/www/html/wordpress
     depends_on:
       - mariadb
     networks:
-      - levensta
-    environment:
-      DB_HOST: ${DB_HOST}
-      DB_NAME: ${DB_NAME}
-      DB_USER: ${DB_USER}
-      DB_PASSWORD: ${DB_PASSWORD}
+      - levensta-network
+    env_file:
+      - ./.env
+    tty: true
 
   mariadb:
     container_name: mariadb
-    build: ./mariadb
+    build: ./requirements/mariadb
     volumes:
       - db:/var/lib/mysql
     networks:
-      - levensta
-    environment:
-      DB_HOST: ${DB_HOST}
-      DB_NAME: ${DB_NAME}
-      DB_USER: ${DB_USER}
-      DB_PASSWORD: ${DB_PASSWORD}
+      - levensta-network
+    env_file:
+      - ./.env
+    tty: true
 
 volumes:
   db:
@@ -58,5 +54,5 @@ volumes:
       device: /home/${USER}/data/wp
 
 networks:
-  levensta:
+  levensta-network:
     driver: bridge
