@@ -3,6 +3,7 @@ version: "3.3"
 services:
   nginx:
     container_name: nginx
+    restart: always
     build: ./requirements/nginx
     volumes:
       - wp:/var/www/html/wordpress
@@ -15,6 +16,7 @@ services:
 
   wordpress:
     container_name: wordpress
+    restart: always
     build: ./requirements/wordpress
     volumes:
       - wp:/var/www/html/wordpress
@@ -28,6 +30,7 @@ services:
 
   mariadb:
     container_name: mariadb
+    restart: always
     build: ./requirements/mariadb
     volumes:
       - db:/var/lib/mysql
@@ -44,14 +47,14 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /home/${USER}/data/db
+      device: ~/data/db
   wp:
     name: wp
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /home/${USER}/data/wp
+      device: ~/data/wp
 
 networks:
   levensta-network:
