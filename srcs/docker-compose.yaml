@@ -3,12 +3,14 @@ version: "3.3"
 services:
   nginx:
     container_name: nginx
-    restart: always
     build: ./requirements/nginx
     volumes:
       - wp:/var/www/html/wordpress
+      - adm:/var/www/html/adminer
     depends_on:
       - wordpress
+      - nodejs
+      - ftp-serv
     networks:
       - levensta-network
     ports:
@@ -16,21 +18,19 @@ services:
 
   wordpress:
     container_name: wordpress
-    restart: always
     build: ./requirements/wordpress
     volumes:
       - wp:/var/www/html/wordpress
     depends_on:
       - mariadb
+      - redis
     networks:
       - levensta-network
     env_file:
       - ./.env
-    tty: true
 
   mariadb:
     container_name: mariadb
-    restart: always
     build: ./requirements/mariadb
     volumes:
       - db:/var/lib/mysql
@@ -38,23 +38,64 @@ services:
       - levensta-network
     env_file:
       - ./.env
-    tty: true
+
+  ftp-serv:
+    container_name: ftp-serv
+    build: ./requirements/bonus/ftp
+    ports:
+      - "20:20"
+      - "21:21"
+    volumes: 
+      - wp:/var/www/html/wordpress
+    networks:
+      - levensta-network
+
+  redis:
+    container_name: redis
+    build: ./requirements/bonus/redis
+    networks:
+      - levensta-network
+
+  adminer:
+    container_name: adminer
+    build: ./requirements/bonus/adminer
+    env_file:
+      - .env
+    networks:
+      - levensta-network
+    volumes:
+      - adm:/var/www/html/adminer/
+
+  nodejs:
+    container_name: nodejs
+    build: ./requirements/bonus/nodejs
+    networks:
+      - levensta-network
+    ports:
+      - "3000:3000"
 
 volumes:
+  adm:
+    name: adm  
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/levensta/techies/adm
   db:
     name: db
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: ~/data/db
+      device: /home/levensta/techies/db
   wp:
     name: wp
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: ~/data/wp
+      device: /home/levensta/techies/wp
 
 networks:
   levensta-network:
